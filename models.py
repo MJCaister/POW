@@ -5,13 +5,13 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 db = SQLAlchemy()
 
+
 class Capture(db.Model):
     __tablename__ = 'Capture'
 
     id = db.Column(db.Integer, primary_key=True)
     date = db.Column(db.Text, nullable=False)
     desc = db.Column(db.Text)
-
 
 
 class Prisoner(db.Model):
@@ -26,11 +26,10 @@ class Prisoner(db.Model):
     first_names = db.Column(db.Text)
     branch = db.Column(db.Text)
     photo = db.Column(db.String)
-    
+
     Capture = db.relationship('Capture', primaryjoin='Prisoner.capture == Capture.id', backref='prisoners')
     Rank = db.relationship('Rank', primaryjoin='Prisoner.rank == Rank.id', backref='prisoners')
     units = db.relationship('PrisonerUnit', back_populates='prisoner')
-
 
 
 class PrisonerUnit(db.Model):
@@ -42,7 +41,6 @@ class PrisonerUnit(db.Model):
 
     prisoner = db.relationship('Prisoner', back_populates="units")
     unit = db.relationship('Unit', back_populates="prisoners")
-
 
 
 class Rank(db.Model):
@@ -64,6 +62,7 @@ class Unit(db.Model):
 
     prisoners = db.relationship('PrisonerUnit', back_populates="unit")
 
+
 class User(UserMixin, db.Model):
     __tablename__ = 'User'
 
@@ -81,6 +80,7 @@ class User(UserMixin, db.Model):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
+
 class Comment(db.Model):
     __tablename__ = 'Comment'
 
@@ -90,9 +90,9 @@ class Comment(db.Model):
     powid = db.Column(db.ForeignKey('Prisoner.id'))
 
     User = db.relationship('User', primaryjoin='Comment.userid == User.id', backref='comments')
-    Prisoner = db.relationship('Prisoner', primaryjoin='Comment.powid == Prisoner.id', backref= 'comments')
-#t_sqlite_sequence = db.Table(
+    Prisoner = db.relationship('Prisoner', primaryjoin='Comment.powid == Prisoner.id', backref='comments')
+# t_sqlite_sequence = db.Table(
 #    'sqlite_sequence',
 #    db.Column('name', db.NullType),
 #    db.Column('seq', db.NullType)
-#)
+# )

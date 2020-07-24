@@ -8,12 +8,15 @@ class CommentForm(FlaskForm):
     comment = StringField('Comment', validators=[DataRequired()])
     submit = SubmitField("Post Comment")
 
+
 class DeleteForm(FlaskForm):
     submit = SubmitField("Delete Comment")
+
 
 class SearchForm(FlaskForm):
     query = StringField('query', validators=[DataRequired()])
     submit = SubmitField('🔍')
+
 
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
@@ -23,7 +26,6 @@ class LoginForm(FlaskForm):
 
 
 class RegistrationForm(FlaskForm):
-
     username = StringField('Username', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
@@ -41,11 +43,13 @@ class RegistrationForm(FlaskForm):
         if user is not None:
             raise ValidationError('Please use a different email address.')
 
+
 class PasswordUpdate(FlaskForm):
     currentpassword = PasswordField('Current Password', validators=[DataRequired()])
     password = PasswordField('New Password', validators=[DataRequired()])
     password2 = PasswordField('Repeat New Password', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Update Password')
+
 
 class ContactForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
